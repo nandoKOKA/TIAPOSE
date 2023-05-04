@@ -39,7 +39,7 @@ pac_stella=c(160, 8, 0, 52, 20, 0, 0)
 pac_bud=c(200, 200, 0, 0, 30, 0, 0)
 
 # Definir Plano
-s1=c(arm,v1,v2,v3,pac_stella,pac_bud)
+    s1=c(arm,v1,v2,v3,pac_stella,pac_bud)
 
 #criar array para o stock de steella e bud
 stock_stella=c(0, 0, 0, 0, 0, 0, 0)
@@ -55,14 +55,15 @@ eval <- function(s) {
   #s=repair(s) #função que vai corrigir os valores
   sarm=s[1:7]
   
+  
  
-    for(i in s) {
+    for(i in 1:length(s)) {
  
-        if(pac_stella[i]>vendas_stella[i]){
-          vendas_stella[i]=pac_stella[i]
-           stock_stella[i]= pac_stella[i] - vendas_stella[i]
+        if(s[i]>vendas_stella[i]){
+          vendas_stella[i]= s[i] #pac stella
+           stock_stella[i]= s[i] - vendas_stella[i]
         } else {
-           vendas_stella[i]= pac_stella[i] + stock_stella[i] 
+           vendas_stella[i]= s[i] + stock_stella[i] 
            stock_stella[i]= 0
         }
       #calcular custo stock
