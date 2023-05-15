@@ -34,7 +34,7 @@ preco_bud <- 4.4
 # Definir os vetores exemplo
 vendas_previstas_stella=c(141, 154, 18, 102, 211, 69, 37)
 vendas_previstas_bud=c(211, 172, 220, 330, 39, 45, 125)
-arm=c(6, 1, 0, 1, 1, 0, 1)
+arm=c(6, 3, 0, 1, 1, 0, 1)
 v1=c(2, 0, 0, 1, 0, 0, 0)
 v2=c(2, 1, 0, 0, 1, 0, 0)
 v3=c(2, 1, 0, 0, 0, 0, 0)
@@ -124,12 +124,12 @@ eval <- function(s) {
     }
   
     print(noquote(paste("recursos =", recursos[1])))
+    print(noquote(paste("custo vei =", custo_total_vei)))
+    print(noquote(paste("custo arm =", custo_total_arm)))
+    print(noquote(paste("lucro vendas =", lucro_vendas_st_bud)))
     return(lucro)
 }
 
-#falta meter os recursos, aquilo que cada veiculo pode levar o armazem 
 
-
-
-print(eval(s1))  
+print(noquote(paste("LUCRO FINAL =", eval(s1))))
 
