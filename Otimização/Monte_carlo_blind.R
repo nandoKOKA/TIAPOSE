@@ -52,7 +52,7 @@ montecarlo <- function(lower, upper, N) {
 # Verificar se as restrições são satisfeitas
 repair <- function(s) {
   s=round(s)
-  print(s)
+  
   for (i in 1:7) {
     ## tratar veiculos e bebidas empacotadas
     
