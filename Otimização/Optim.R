@@ -124,13 +124,14 @@ eval <- function(s) {
      recursos =  recursos + (arm[i]+v1[i]+v2[i]+v3[i])
     }
   
-    print(noquote(paste("recursos =", recursos[1])))
-    print(noquote(paste("custo vei =", custo_total_vei)))
-    print(noquote(paste("custo arm =", custo_total_arm)))
-    print(noquote(paste("lucro vendas =", lucro_vendas_st_bud)))
+    
     return(lucro)
 }
 
 
 print(noquote(paste("LUCRO FINAL =", eval(s1))))
+print(noquote(paste("recursos =", recursos[1])))
+print(noquote(paste("custo vei =", custo_total_vei)))
+print(noquote(paste("custo arm =", custo_total_arm)))
+print(noquote(paste("lucro vendas =", lucro_vendas_st_bud)))
 
