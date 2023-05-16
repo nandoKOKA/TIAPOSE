@@ -7,7 +7,7 @@ library(readxl)
 
 # read data:
 
-bebidas <- read_excel("C:/Users/Miguel Rebelo/Desktop/Projeto_HW/bebidas.xlsx")
+bebidas <- read_excel("~/Documents/GitHub/TIAPOSE/bebidas.xlsx")
 
 cat("\nChoose the beer:\n 1-STEELA\n 2-BUDD")
 beer <- as.integer(readline());#saves the type of beer
