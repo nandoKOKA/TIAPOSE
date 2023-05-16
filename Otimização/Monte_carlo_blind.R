@@ -15,7 +15,7 @@ vendas_previstas_bud <- c(211, 172, 220, 330, 39, 45, 125)
 # Definição dos limites inferiores e superiores para cada variável
 # arm v1 v2 v3 pac steella e pac bud
 lower <- c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-upper <- c(5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500)
+upper <- c(3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500)
 
 
 N <- 10000 # number of searches
@@ -61,10 +61,11 @@ repair <- function(s) {
       pac_bud[i] > (arm[i] * max_pac_rec))
       {
       pac_stella[i] = pac_stella[i] / max_pac_rec
+      pac_bud[i] = pac_bud[i] / max_pac_rec
       
-    } else if (pac_stella[i] > ((v1[i]*max_dist_v1)  + (v2[i]*max_dist_v2) + (v3[i]*max_dist_v3)) ) {
+    } else if ((pac_stella[i] + pac_bud[i]) > ((v1[i]*max_dist_v1)  + (v2[i]*max_dist_v2) + (v3[i]*max_dist_v3)) ) {
       
-       resto <- pac_stella[i] - ((v1[i]*max_dist_v1)  + (v2[i]*max_dist_v2) + (v3[i]*max_dist_v3))
+       resto <- (pac_stella[i] + pac_bud[i]) - ((v1[i]*max_dist_v1)  + (v2[i]*max_dist_v2) + (v3[i]*max_dist_v3))
        
        while(resto != 0){
          
@@ -98,6 +99,7 @@ repair <- function(s) {
   pac_bud <- s[36:42]
   
   s1 <- c(arm, v1, v2, v3, pac_stella, pac_bud)
+  #print(s1)
   #return(s1)
 }  
 
@@ -106,6 +108,7 @@ s2 <- repair(s1)
 
 
 
+
 #Imprimir ultimo plano
-cat("arm:", s2[1:7], "\nv1:", s2[8:14], "\nv2:", s2[15:21], "\nv3:", s2[22:28], "\npac_stella:", s2[29:35], "\npac_bud:", s2[35:42])
+cat("arm:", s2[1:7], "\nv1:", s2[8:14], "\nv2:", s2[15:21], "\nv3:", s2[22:28], "\npac_stella:", s2[29:35], "\npac_bud:", s2[36:42])
 
