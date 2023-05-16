@@ -1,4 +1,5 @@
-#
+
+
 #Definir os custos fixos
 custo_armazem_normal <- 10
 custo_armazem_fim_semana <- 15
