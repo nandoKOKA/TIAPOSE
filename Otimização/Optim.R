@@ -1,4 +1,4 @@
-
+source("Repair.R")
 
 #Definir os custos fixos
 custo_armazem_normal <- 10
@@ -61,8 +61,8 @@ s1=c(arm,v1,v2,v3,pac_stella,pac_bud)
 eval <- function(s) {
   
   s=round(s)
-  #s=repair(s) #função que vai corrigir os valores
-  sarm=s[1:7]
+  s=repair(s) #função que vai corrigir os valores
+ 
   
     for(i in 1:7) {
       
@@ -92,19 +92,20 @@ eval <- function(s) {
       }
       
       # calcula o custo total do armazem e veiculos
-      if(i<6){
-        custo_total_arm = custo_total_arm + (arm[i] * custo_armazem_normal)
-        custo_total_vei_1 = custo_total_vei_1 + (v1[i] * custo_distribuicao_v1_normal)
-        custo_total_vei_2 = custo_total_vei_2 + (v2[i] * custo_distribuicao_v2_normal)
-        custo_total_vei_3 = custo_total_vei_3 + (v3[i] * custo_distribuicao_v3_normal)
-        } else {
+      
+      #fins de semana
+      if( i >= 2 & i <= 3){
         custo_total_arm = custo_total_arm + (arm[i] * custo_armazem_fim_semana)
         custo_total_vei_1 = custo_total_vei_1 + (v1[i] * custo_distribuicao_v1_fim_semana)
         custo_total_vei_2 = custo_total_vei_2 + (v2[i] * custo_distribuicao_v2_fim_semana)
         custo_total_vei_3 = custo_total_vei_3 + (v3[i] * custo_distribuicao_v3_fim_semana)
+        } else {
+        #semana
+        custo_total_arm = custo_total_arm + (arm[i] * custo_armazem_normal)
+        custo_total_vei_1 = custo_total_vei_1 + (v1[i] * custo_distribuicao_v1_normal)
+        custo_total_vei_2 = custo_total_vei_2 + (v2[i] * custo_distribuicao_v2_normal)
+        custo_total_vei_3 = custo_total_vei_3 + (v3[i] * custo_distribuicao_v3_normal)
       }
-      
-      
       
       #calcular custo stock
       custo_stock_stella = custo_stock_stella + stock_stella[i]
@@ -117,12 +118,8 @@ eval <- function(s) {
      #calcular custos
      custo_total_vei = custo_total_vei_1 + custo_total_vei_2 + custo_total_vei_3
      custo_total_empresa = custo_total_arm + custo_total_vei + custo_total_stock_imperiais
-     despesas = custo_total_vei + custo_total_empresa
+     despesas = custo_total_empresa
      
-     print("lucro:")
-     print(lucro_vendas_st_bud)
-     print("despesas:")
-     print(despesas)
      #calcular lucro final 
      lucro = lucro_vendas_st_bud - despesas
      recursos =  recursos + (arm[i]+v1[i]+v2[i]+v3[i])
@@ -131,14 +128,16 @@ eval <- function(s) {
      s1=c(arm,v1,v2,v3,pac_stella,pac_bud)
      
     }
+  #
+  if(FALSE) {
   print(noquote(paste("recursos =", recursos[1])))
   print(noquote(paste("custo vei =", custo_total_vei)))
   print(noquote(paste("custo arm =", custo_total_arm)))
   print(noquote(paste("lucro vendas =", lucro_vendas_st_bud)))
-  
+  }
   return(lucro)
 }
 
-
-print(noquote(paste("LUCRO FINAL =", eval(s1))))
+#imprimir lucro e testar funcao
+#print(noquote(paste("LUCRO FINAL =", eval(s1))))
 
