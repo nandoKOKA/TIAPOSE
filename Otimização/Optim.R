@@ -119,19 +119,26 @@ eval <- function(s) {
      custo_total_empresa = custo_total_arm + custo_total_vei + custo_total_stock_imperiais
      despesas = custo_total_vei + custo_total_empresa
      
+     print("lucro:")
+     print(lucro_vendas_st_bud)
+     print("despesas:")
+     print(despesas)
      #calcular lucro final 
      lucro = lucro_vendas_st_bud - despesas
      recursos =  recursos + (arm[i]+v1[i]+v2[i]+v3[i])
+     
+     #atualizar s1
+     s1=c(arm,v1,v2,v3,pac_stella,pac_bud)
+     
     }
+  print(noquote(paste("recursos =", recursos[1])))
+  print(noquote(paste("custo vei =", custo_total_vei)))
+  print(noquote(paste("custo arm =", custo_total_arm)))
+  print(noquote(paste("lucro vendas =", lucro_vendas_st_bud)))
   
-    
-    return(lucro)
+  return(lucro)
 }
 
 
 print(noquote(paste("LUCRO FINAL =", eval(s1))))
-print(noquote(paste("recursos =", recursos[1])))
-print(noquote(paste("custo vei =", custo_total_vei)))
-print(noquote(paste("custo arm =", custo_total_arm)))
-print(noquote(paste("lucro vendas =", lucro_vendas_st_bud)))
 

@@ -1,3 +1,5 @@
+source("Optim.R")
+
 # Restrições de distribuição máxima de bebidas
 max_dist_v1 <- 60
 max_dist_v2 <- 90
@@ -20,6 +22,12 @@ upper <- c(3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 
 
 N <- 10000 # number of searches
 
+
+
+MC=mcsearch(eval,lower=lower,upper=upper,N=N,type="max")
+
+if(FALSE)
+{
 montecarlo <- function(lower, upper, N) {
   # Create the vectors
   arm <- c(0, 0, 0, 0, 0, 0)
@@ -46,7 +54,7 @@ montecarlo <- function(lower, upper, N) {
                
                #return(s1)
 }
-
+}
 
 
 # Verificar se as restrições são satisfeitas
