@@ -49,4 +49,4 @@ pac_bud <- sol[36:42]
 #imprimir a melhor solução do lucro
 cat("\nBest solution:\n")
 cat("arm:", sol[1:7], "\nv1:", sol[8:14], "\nv2:", sol[15:21], "\nv3:", sol[22:28], "\npac_stella:", sol[29:35], "\npac_bud:", sol[36:42])
-cat("\nEvaluation function:",HC$eval,"\n")
+cat("\nLucro:",HC$eval,"\n")
