@@ -1,5 +1,9 @@
-source("hill.R")
-source("Eval.R") # eval está aqui
+source("Eval.R")
+source("Optim.R")
+source("Repair.R")
+source("montecarlo.R")
+source("blind.R") 
+
 
 # dimension
 D=42
