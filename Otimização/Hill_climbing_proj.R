@@ -14,6 +14,7 @@ rchange1=function(par,lower,upper) # change for hclimbing
 
 D=42 # dimension do nosso plano
 
+#abordagem stor
 #total de cervejas
 tc = vendas_previstas_bud + vendas_previstas_stella
 vtc = 0.35 * tc # das previtas, usamos apenas 35% - dependo da confianca das previsoes
