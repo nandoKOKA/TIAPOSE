@@ -1,3 +1,5 @@
+source("Repair.R")
+
 #Definir os custos fixos e outras variaveis 
 custo_armazem_normal <- 10
 custo_armazem_fim_semana <- 15

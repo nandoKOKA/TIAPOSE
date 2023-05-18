@@ -1,3 +1,8 @@
+max_pac_rec <- 72
+max_dist_v1<- 60
+max_dist_v2<- 90
+max_dist_v3<- 120
+
 # Função Repair
 repair <- function(s) {
   s = round(s)

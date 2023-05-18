@@ -57,5 +57,5 @@ vendas_bud=c(0, 0, 0, 0, 0, 0, 0)
 s1=c(arm,v1,v2,v3,pac_stella,pac_bud)
 
 #imprimir lucro e testar funcao
-print(noquote(paste("LUCRO FINAL =", eval(s1))))
+#print(noquote(paste("LUCRO FINAL =", eval(s1))))
 
