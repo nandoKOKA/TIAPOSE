@@ -7,7 +7,7 @@ library(readxl)
 
 # read data:
 
-bebidas <- read_excel("~/Documents/GitHub/TIAPOSE/bebidas.xlsx")
+bebidas <- read_excel("C:/Users/Miguel Rebelo/Desktop/TIAPOSE/Otimização/bebidas.xlsx")
 
 cat("\nChoose the beer:\n 1-STEELA\n 2-BUDD")
 beer <- as.integer(readline());#saves the type of beer
@@ -19,7 +19,7 @@ i <- as.integer(readline());# saves the position of the model
 
 switch(beer, 
        "1" = TS <- ts(bebidas[,5]), #CRIAR TS COM DADOS DE STELLA,                           
-       "2"= TS <- ts(bebidas[,6]) #CRIAR TS COM DADOS DE BUDD
+       "2"= TS <- ts(bebidas[,6]) #CRIAR TS COM DADOS DE BUD
 ) 
 
 if(beer==1) { #saves the name of the beer in use
@@ -28,17 +28,18 @@ if(beer==1) { #saves the name of the beer in use
   n_beer="BUD"
 }
 
+
 d1=TS # vector of numeric
 L=length(d1) # size of the time series, 144
 K=7# assumption for the seasonal period: test also acf(d1S)
 
 
-print(paste("incremental (growing) window training of",n_beer))
+print(paste("incremental (rowling) window training of",n_beer))
 cat("\n")
 
 Test=K # H, the number of multi-ahead steps, adjust if needed
-S=round(K/3) # step jump: set in this case to 4 months, a quarter
-Runs=20 # number of growing window iterations, adjust if needed
+S=round(K/7) # K/3 step jump: set in this case to 4 months, a quarter
+Runs=20 # number of growing window iterations, adjust if needed - 
 
 # forecast:
 W=(L-Test)-(Runs-1)*S # initial training window size for the ts space (forecast methods)
@@ -73,6 +74,10 @@ for(b in 1:Runs)  # cycle of the incremental window training (growing window)
   Pred2=lforecast(M2,D,start=(length(H2$tr)+1),Test) # multi-step ahead forecasts
   ev2[b]=mmetric(y=d1[H$ts],x=Pred2,metric="NMAE",val=YR)
   
+  ############
+ 
+  ################
+  
   cat("iter:",b,"TR from:",trinit,"to:",(trinit+length(H$tr)-1),"size:",length(H$tr),
       "TS from:",H$ts[1],"to:",H$ts[length(H$ts)],"size:",length(H$ts),
       "nmae:",ev[b],",",ev2[b],"\n")
@@ -83,6 +88,16 @@ print(paste("\nmedian NMAE values for HW and:",model[i]))
 cat("\nHolt-Winters median NMAE:",median(ev),"\n")
 print(paste(model[i],"median NMAE:",median(ev2)))
 cat("\n")
+
+#Mostar semana/dias previstos - esta a prever para a ultima semana
+predicted_dates <- vector(length = K)
+
+for(b in 1:K) {
+  predicted_dates[b] <- as.character(bebidas$DATA[H$ts[b]])
+  
+}
+print("Predicted Dates:")
+print(predicted_dates)
 
 # last iteration predictions:
 mgraph(d1[H$ts],Pred,graph="REG",Grid=10,col=c("black","blue","red"),leg=list(pos="topleft",leg=c("target","HW pred.","mlpe")))

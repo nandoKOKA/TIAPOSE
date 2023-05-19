@@ -109,6 +109,7 @@ eval <- function(s) {
   if(lucro<0) {
     lucro=abs(lucro)
   }
+  
   #hide
   if(FALSE) {
     print(noquote(paste("recursos =", recursos[1])))
@@ -117,5 +118,6 @@ eval <- function(s) {
     print(noquote(paste("lucro vendas =", lucro_vendas_st_bud)))
     
   }
-  return(lucro)
+  ##hill e monte= lucro // sann = - lucro (para maximizar o profit)
+  return(-lucro) # ou lucro
 }

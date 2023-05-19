@@ -32,7 +32,6 @@ LTR=L-H
 # according to the ts function documentation: frequency=7 assumes daily data, frequency=4 or 12 assumes quarterly and monthly data
 TR=ts(TS[1:LTR],frequency=K,start=c(1949,1)) # start means: year of 1949, 1st month (since frequency=K=12).
 # show the in-sample (training data) time series:
-
 plot(TR)
 print(TR)
 mpause() # press enter

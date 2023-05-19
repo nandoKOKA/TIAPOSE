@@ -1,32 +1,31 @@
 source("Eval.R")
 source("Optim.R")
-source("Repair.R")
-source("montecarlo.R")
-source("blind.R") 
-
 
 # dimension
 D=42
 
 #abordagem stor
+#Para ter o lower value do armazem podemos calcular os recursos com base
+#numa percentagem das vendas previstas
 #total de cervejas
 tc = vendas_previstas_bud + vendas_previstas_stella
-vtc = 0.35 * tc # das previtas, usamos apenas 35% - dependo da confianca das previsoes
+vtc = 0.35 * tc # das previtas, usamos apenas 35% - dependendo da confianca das previsoes
 n_func_max= round(vtc/72) # saber o nmr de funcionarios necessários
+
 
 
 # hill climbing search
 N=1000 # 100 searches
 REPORT=N/10 # report results
 
-
+#Assumir por ex que temos 3 vei de cada tipo para cada dia da semana - 9 veiculos de transporte
 lower <- c(rep(0, 7), rep(0, 7), rep(0, 7), rep(0, 7), rep(0, 7), rep(0,7))
 upper <- c(n_func_max, rep(3, 7), rep(3, 7), rep(3, 7), rep(500, 7), rep(500, 7))
 
 
 # slight change of a real par under a normal u(0,0.5) function:
 rchange2=function(par) # change for hclimbing
-{ hchange(par,lower=lower,upper=upper,rnorm,mean=0,sd=0.5,round=FALSE) }
+{ hchange(par,lower=lower,upper=upper,rnorm,mean=45,sd=0.90,round=FALSE) }
 
 
 cat("Simulated Annealing search max profit D=",D,"(iters=",N,")\n")
@@ -47,4 +46,4 @@ pac_bud <- sol[36:42]
 #imprimir a melhor solução do lucro
 cat("\nBest solution:\n")
 cat("arm:", sol[1:7], "\nv1:", sol[8:14], "\nv2:", sol[15:21], "\nv3:", sol[22:28], "\npac_stella:", sol[29:35], "\npac_bud:", sol[36:42])
-cat("\nLucro:",SA$value,"\n")
+cat("\nLucro:",abs(SA$value),"\n")
