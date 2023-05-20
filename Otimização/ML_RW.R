@@ -10,22 +10,20 @@ library(readxl)
 bebidas <- read_excel("C:/Users/Miguel Rebelo/Desktop/TIAPOSE/Otimização/bebidas.xlsx")
 
 cat("\nChoose the beer:\n 1-STEELA\n 2-BUDD")
-beer <- as.integer(readline());#saves the type of beer
+beer <- as.integer(readline())#saves the type of beer
 
 model <- c("naive","mlp","cubist","pcr","randomforest","rvm","plsr","svm","mlpe","mars","cppls","naive","naivebayes","lr","xgboost","boosting","ctree","rpart","kknn")
 cat("\n\n\nChoose ML model:\n1-naive\n2-mlp\n3-cubist\4-npcr\n5-randomforest\n6-rvm\n7-plsr\n8-svm\n9-mlpe\n10-mars\n11-cppls\n12-naive\n13-naivebayes\n14-lr\n15-xgboost\n16-boosting\n17-ctree\n18-rpart\n19-kknn")
-i <- as.integer(readline());# saves the position of the model
+i <- as.integer(readline())# saves the position of the model
 
 
-switch(beer, 
-       "1" = TS <- ts(bebidas[,5]), #CRIAR TS COM DADOS DE STELLA,                           
-       "2"= TS <- ts(bebidas[,6]) #CRIAR TS COM DADOS DE BUD
-) 
 
-if(beer==1) { #saves the name of the beer in use
-  n_beer ="STELLA"
+if (beer == 1) { # saves the name of the beer in use
+  n_beer <- "STELLA"
+  TS <- ts(bebidas[, 5])
 } else {
-  n_beer="BUD"
+  n_beer <- "BUD"
+  TS <- ts(bebidas[, 6])
 }
 
 
@@ -37,7 +35,7 @@ K=7# assumption for the seasonal period: test also acf(d1S)
 print(paste("incremental (rowling) window training of",n_beer))
 cat("\n")
 
-Test=K # H, the number of multi-ahead steps, adjust if needed
+Test=21 # H, the number of multi-ahead steps, adjust if needed
 S=round(K/7) # K/3 step jump: set in this case to 4 months, a quarter
 Runs=20 # number of growing window iterations, adjust if needed - 
 
@@ -54,6 +52,7 @@ YR=diff(range(d1)) # global Y range, use the same range for the NMAE calculation
 ev=vector(length=Runs) # error vector for "HoltWinters"
 ev2=vector(length=Runs) # error vector for "mlpe"
 
+predicted_values <- vector(length = Test)
 # rolling window:
 for(b in 1:Runs)  # cycle of the incremental window training (growing window)
 {
@@ -75,8 +74,9 @@ for(b in 1:Runs)  # cycle of the incremental window training (growing window)
   ev2[b]=mmetric(y=d1[H$ts],x=Pred2,metric="NMAE",val=YR)
   
   ############
- 
   ################
+  
+  last_predicted_values <- tail(Pred2, 7)
   
   cat("iter:",b,"TR from:",trinit,"to:",(trinit+length(H$tr)-1),"size:",length(H$tr),
       "TS from:",H$ts[1],"to:",H$ts[length(H$ts)],"size:",length(H$ts),
@@ -89,15 +89,24 @@ cat("\nHolt-Winters median NMAE:",median(ev),"\n")
 print(paste(model[i],"median NMAE:",median(ev2)))
 cat("\n")
 
+
 #Mostar semana/dias previstos - esta a prever para a ultima semana
 predicted_dates <- vector(length = K)
-
-for(b in 1:K) {
+predicted_sales <- vector(length = K)
+for(b in 1:Test) {
   predicted_dates[b] <- as.character(bebidas$DATA[H$ts[b]])
-  
-}
+  predicted_dates <- predicted_dates[1:7]
+  predicted_sales[b] <- as.character(H$ts[b])
+  predicted_sales <- predicted_sales[1:7]
+
+  }
 print("Predicted Dates:")
 print(predicted_dates)
+print(predicted_sales)
+
+
+print(last_predicted_values)
+
 
 # last iteration predictions:
 mgraph(d1[H$ts],Pred,graph="REG",Grid=10,col=c("black","blue","red"),leg=list(pos="topleft",leg=c("target","HW pred.","mlpe")))

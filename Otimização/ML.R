@@ -15,7 +15,7 @@ switch(beer,
        ) 
     
 # read the time series into object S
-NPRED=7# number of predictions
+NPRED=14# number of predictions
 srange=diff(range(S)) # compute the range of S
 
 # show S and some statistics:
@@ -71,4 +71,5 @@ cat("RRSE:",mmetric(Y,PNN,metric="RRSE"),"\n")
 # graph: REG - simple Regression Plot
 print("Graph with NN predictions (1-ahead):")
 mgraph(Y,PNN,graph="REG",Grid=10,lty=1,col=c("black","blue"),main="NN predictions",leg=list(pos="topright",leg=c("target","predictions")))
+
 

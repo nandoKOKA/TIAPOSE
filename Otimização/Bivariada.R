@@ -12,9 +12,9 @@ library(readxl)
 bebidas <- read_excel("C:/Users/Miguel Rebelo/Desktop/Projeto_HW/bebidas.xlsx")# Quarter data
 DF <- as.data.frame(bebidas)
 K=7 # seasonal frequency: 4 time periods per year
-LTS=K #  1 year, used for the forecasting range, thus 4 forecasts
-budd=DF[,5] # BUDD
-stella=DF[,6]   # STELLA
+LTS=2*K #  1 year, used for the forecasting range, thus 4 forecasts
+budd=DF[,6] # BUDD
+stella=DF[,5]   # STELLA
 
 hd=holdout(budd,ratio=LTS,mode="order") # simple ordered holdout train and test split, rminer function
 
@@ -24,7 +24,7 @@ Y=cdata[hd$ts,] # target values
 
 ### Recipe for VAR.
 # note: here the default type="const" value is assumed. there are other options, see: help(VAR)
-LAGMAX=16 # 4*K. Also default lags.pt=16 of serial.test
+LAGMAX=7 # 4*K. Also default lags.pt=16 of serial.test
 # p lag order selection for a multi-variate VAR model with 2 time series:
 # VARselect(mtr,lag.max=LAGMAX,type="const")[["selection"]]
 vselect=VARselect(mtr,lag.max=LAGMAX,type="const")
