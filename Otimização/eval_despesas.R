@@ -1,3 +1,7 @@
+## EVAL despesas
+## RETORNA TAMBEM AS DESPESAS
+
+
 source("Repair.R")
 
 #Definir os custos fixos e outras variaveis 
@@ -29,7 +33,7 @@ despesas <-0
 
 
 # definir a função eval
-eval <- function(s) {
+eval_despesas <- function(s) {
   
   
   s=abs(round(s))
@@ -119,6 +123,9 @@ eval <- function(s) {
     print(noquote(paste("lucro vendas =", lucro_vendas_st_bud)))
     
   }
+  
+  
+ resultado <- list(-lucro, despesas)
   ##hill e monte= lucro // sann = - lucro (para maximizar o profit)
-  return(-lucro) # ou lucro
+  return(resultado) # ou lucro
 }
