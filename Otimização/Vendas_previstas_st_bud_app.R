@@ -75,6 +75,12 @@ Otimiza <-function (vendas_previstas_stella, vendas_previstas_bud) {
   n_func_max= round(vtc/72) # saber o nmr de funcionarios necessários
   
   
+  ##podemos utilizar tambem a mesma abordagem para os veiculos
+  n_vei_max_v1 =round(vtc/60)
+  n_vei_max_v2 =round(vtc/90)
+  n_vei_max_v3 =round(vtc/120)
+  
+  
   
   # hill climbing search
   N=1000 # 100 searches
@@ -82,7 +88,7 @@ Otimiza <-function (vendas_previstas_stella, vendas_previstas_bud) {
   
   #Assumir por ex que temos 3 vei de cada tipo para cada dia da semana - 9 veiculos de transporte
   lower <- c(rep(0, 7), rep(0, 7), rep(0, 7), rep(0, 7), rep(0, 7), rep(0,7))
-  upper <- c(n_func_max, rep(3, 7), rep(3, 7), rep(3, 7), rep(500, 7), rep(500, 7))
+  upper <- c(n_func_max, n_vei_max_v1, n_vei_max_v2, n_vei_max_v3, rep(500, 7), rep(500, 7))
   
   
   # slight change of a real par under a normal u(0,0.5) function:

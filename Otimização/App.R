@@ -157,7 +157,7 @@ server <- function(input, output) {
   })
   
   output$output5 <- renderText({
-    paste("Plano Veículo 1")
+    paste("Plano Veículos Tipo 1")
   })
   
   output$output6 <- renderText({
@@ -165,7 +165,7 @@ server <- function(input, output) {
   })
   
   output$output7 <- renderText({
-    paste("Plano Veículo 2")
+    paste("Plano Veículos Tipo 2")
   })
   
   output$output8 <- renderText({
@@ -173,7 +173,7 @@ server <- function(input, output) {
   })
   
   output$output9 <- renderText({
-    paste("Plano Veículo 3")
+    paste("Plano Veículos Tipo 3")
   })
   
   output$output10 <- renderText({
@@ -216,7 +216,7 @@ server <- function(input, output) {
       })
       
       output$output5 <- renderText({
-        paste("Plano Veículo 1")
+        paste("Plano Veículos Tipo 1")
       })
       
       output$output6 <- renderText({
@@ -224,7 +224,7 @@ server <- function(input, output) {
       })
       
       output$output7 <- renderText({
-        paste("Plano Veículo 2")
+        paste("Plano Veículos Tipo 2")
       })
       
       output$output8 <- renderText({
@@ -232,7 +232,7 @@ server <- function(input, output) {
       })
       
       output$output9 <- renderText({
-        paste("Plano Veículo 3")
+        paste("Plano Veículos Tipo 3")
       })
       
       output$output10 <- renderText({
@@ -273,7 +273,7 @@ server <- function(input, output) {
       print(predicted_sales_steella)
       
       output$output1 <- renderText({
-        paste(predicted_sales_steella, collapse = ", ")
+        paste(round(predicted_sales_steella), collapse = ", ")
       })
       
       # Alterar cerceja
@@ -291,7 +291,7 @@ server <- function(input, output) {
         
       # Atualizar a caixa bud
       output$output3 <- renderText({
-        paste(predicted_sales_bud, collapse = ", ")
+        paste(round(predicted_sales_bud), collapse = ", ")
       })
       
       
