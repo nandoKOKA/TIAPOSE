@@ -36,7 +36,7 @@ despesas <-0
 eval_despesas <- function(s) {
   
   
-  s=abs(round(s))
+  s=abs(round(s)) #garantir que nao existem valores negativos
   s=repair(s) #função que vai corrigir os valores
   
   arm <- s[1:7]

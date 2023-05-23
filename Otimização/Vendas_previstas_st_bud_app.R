@@ -1,4 +1,4 @@
-semana_selecionada_ML_RW <- function(SemanaSelecionada, cerveja) {
+semana_selecionada_ML_RW <- function(SemanaSelecionada, cerveja,metodo_ml) {
   library(forecast)
   library(readxl)
   
@@ -31,7 +31,7 @@ semana_selecionada_ML_RW <- function(SemanaSelecionada, cerveja) {
   
   for (b in 1:Runs) {
     H2 <- holdout(D$y, ratio = Test, mode = "incremental", iter = b, window = W2, increment = S)
-    M2 <- fit(y ~ ., D[H2$tr, ], "mlpe")
+    M2 <- fit(y ~ ., D[H2$tr, ], metodo_ml)
     Pred2 <- lforecast(M2, D, start = (length(H2$tr) + 1), Test)
     
     predicted_sales[(b - 1) * S + 1:b * S] <- Pred2
@@ -71,7 +71,7 @@ Otimiza <-function (vendas_previstas_stella, vendas_previstas_bud) {
   #numa percentagem das vendas previstas
   #total de cervejas
   tc = vendas_prev_bud + vendas_prev_bud
-  vtc = 0.35 * tc # das previtas, usamos apenas 35% - dependendo da confianca das previsoes
+  vtc = 0.50 * tc # das previtas, usamos apenas 35% - dependendo da confianca das previsoes
   n_func_max= round(vtc/72) # saber o nmr de funcionarios necessários
   
   
@@ -88,7 +88,7 @@ Otimiza <-function (vendas_previstas_stella, vendas_previstas_bud) {
   
   #Assumir por ex que temos 3 vei de cada tipo para cada dia da semana - 9 veiculos de transporte
   lower <- c(rep(0, 7), rep(0, 7), rep(0, 7), rep(0, 7), rep(0, 7), rep(0,7))
-  upper <- c(n_func_max, n_vei_max_v1, n_vei_max_v2, n_vei_max_v3, rep(500, 7), rep(500, 7))
+  upper <- c(n_func_max, n_vei_max_v1, n_vei_max_v2, n_vei_max_v3, rep(900, 7), rep(900, 7))
   
   
   # slight change of a real par under a normal u(0,0.5) function:
@@ -96,7 +96,7 @@ Otimiza <-function (vendas_previstas_stella, vendas_previstas_bud) {
   { hchange(par,lower=lower,upper=upper,rnorm,mean=45,sd=0.90,round=FALSE) }
   
   
-  cat("Simulated Annealing search max profit D=",D,"(iters=",N,")\n")
+  #cat("Simulated Annealing search max profit D=",D,"(iters=",N,")\n")
   CSANN=list(maxit=N,temp=5,trace=TRUE)
   SA=optim(par=rep(0,D),fn=eval,method="SANN",gr=rchange2,control=CSANN)
   

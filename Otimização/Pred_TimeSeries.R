@@ -32,11 +32,11 @@ if(beer==1) {
   #LTR
   #L
   NTS=K # number of predictions
-  H=NTS 
+  H=2*K ## H = NTS || prever semana 19 || prever semana 18 - 3*K || ...
   
   LTR=L-H
   
-  TR=ts(TS[1:LTR],frequency=K)#eliminar
+  TR=ts(TS[1:LTR],frequency=K) #eliminar
   
   plot(TR)
   print(TR)
@@ -58,7 +58,7 @@ if(beer==1) {
   print(F)
   Pred=F$mean[1:H] # HolWinters format
   mgraph(Y,Pred,graph="REG",Grid=10,col=c("black","blue"),leg=list(pos="topleft",leg=c("target","HW pred.")))
-  cat("MAE:",mmetric(Y,Pred,metric="MAE"),"\n")
+  cat("NMAE:",mmetric(Y,Pred,metric="NMAE"),"\n")
   mpause() # press enter
   
   # arima modeling:
@@ -71,7 +71,7 @@ if(beer==1) {
   print(F1)
   Pred1=F1$mean[1:H]
   mgraph(Y,Pred1,graph="REG",Grid=10,col=c("black","blue"),leg=list(pos="topleft",leg=c("target"," ARIMA pred.")))
-  cat("MAE:",mmetric(Y,Pred1,metric="MAE"),"\n")
+  cat("NMAE:",mmetric(Y,Pred1,metric="NMAE"),"\n")
   mpause() # press enter
   
   # NN from forecast:
@@ -81,7 +81,7 @@ if(beer==1) {
   F3=forecast(NN1,h=H)
   Pred3=F3$mean[1:H] # HolWinters format
   mgraph(Y,Pred3,graph="REG",Grid=10,col=c("black","blue"),leg=list(pos="topleft",leg=c("target","NN1 pred.")))
-  cat("MAE:",mmetric(Y,Pred3,metric="MAE"),"\n")
+  cat("NMAE:",mmetric(Y,Pred3,metric="NMAE"),"\n")
   mpause() # press enter
   
   # ets from forecast:
@@ -90,7 +90,7 @@ if(beer==1) {
   F4=forecast(ETS,h=H)
   Pred4=F4$mean[1:H] # HolWinters format
   mgraph(Y,Pred4,graph="REG",Grid=10,col=c("black","blue"),leg=list(pos="topleft",leg=c("target","ets pred.")))
-  cat("MAE:",mmetric(Y,Pred4,metric="MAE"),"\n")
+  cat("NMAE:",mmetric(Y,Pred4,metric="NMAE"),"\n")
   mpause() # press enter
   
   # -- end of forecast library methods
@@ -110,7 +110,7 @@ if(beer==1) {
   print(F5)
   Pred5=F5
   mgraph(Y,Pred5,graph="REG",Grid=10,col=c("black","blue"),leg=list(pos="topleft",leg=c("target","NN2 pred.")))
-  cat("MAE:",mmetric(Y,Pred5,metric="MAE"),"\n")
+  cat("NMAE:",mmetric(Y,Pred5,metric="NMAE"),"\n")
   mpause() # press enter
   
   # linear regression modeling ("lm"), via rminer:
@@ -124,18 +124,18 @@ if(beer==1) {
   print(F6)
   Pred6=F6
   mgraph(Y,Pred6,graph="REG",Grid=10,col=c("black","blue"),leg=list(pos="topleft",leg=c("target","LM pred.")))
-  cat("MAE:",mmetric(Y,Pred5,metric="MAE"),"\n")
+  cat("NMAE:",mmetric(Y,Pred5,metric="NMAE"),"\n")
   mpause() # press enter
   #
   
   cat("forecast library methods:\n")
-  cat("HW MAE:",mmetric(Y,Pred,metric="MAE"),"\n")
-  cat("AR MAE:",mmetric(Y,Pred1,metric="MAE"),"\n")
-  cat("NN1 MAE:",mmetric(Y,Pred3,metric="MAE"),"\n")
-  cat("ET MAE:",mmetric(Y,Pred4,metric="MAE"),"\n")
+  cat("HW NMAE:",mmetric(Y,Pred,metric="NMAE"),"\n")
+  cat("AR NMAE:",mmetric(Y,Pred1,metric="NMAE"),"\n")
+  cat("NN1 NMAE:",mmetric(Y,Pred3,metric="NMAE"),"\n")
+  cat("ET NMAE:",mmetric(Y,Pred4,metric="NMAE"),"\n")
   cat("\nrminer NN methods:\n")
-  cat("NN2 MAE:",mmetric(Y,Pred5,metric="MAE"),"\n")
-  cat("LM MAE:",mmetric(Y,Pred6,metric="MAE"),"\n")
+  cat("NN2 NMAE:",mmetric(Y,Pred5,metric="NMAE"),"\n")
+  cat("LM NMAE:",mmetric(Y,Pred6,metric="NMAE"),"\n")
   
 
 

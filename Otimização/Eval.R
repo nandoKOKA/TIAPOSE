@@ -119,6 +119,7 @@ eval <- function(s) {
     print(noquote(paste("lucro vendas =", lucro_vendas_st_bud)))
     
   }
+  
   ##hill e monte= lucro // sann = - lucro (para maximizar o profit)
   return(-lucro) # ou lucro
 }

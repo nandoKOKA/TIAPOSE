@@ -17,6 +17,7 @@ ui <- fluidPage(
         body {
           background-color: #AED3E3; /* Cor de fundo azul claro */
           font-family: NewsGott, sans-serif;
+          
         }
         
         
@@ -28,9 +29,14 @@ ui <- fluidPage(
         }
         
         .title-panel .title {
-          background-color: #004B57; /* Cor de fundo vermelha para o titlePanel */
-          color: #ffffff; /* Cor do texto do titlePanel (branco) */
+          background-color: #ffffff; /* Cor de fundo vermelha para o titlePanel */
+          color: #000000; /* Cor do texto do titlePanel (branco) */
           padding: 10px; /* Espaçamento interno do titlePanel */
+          font-family: NewsGott, sans-serif;
+          border: 1px solid #dddddd;
+          border-radius: 5px; /* Cantos arredondados das caixas */
+          font-size:30px;
+          font-weight:bold;
         }
         
         .scrollable-output {
@@ -39,6 +45,7 @@ ui <- fluidPage(
         border: 1px solid #dddddd; /* Opcional: adicione uma borda para separar os outputs */
         border-radius: 5px; /* Opcional: cantos arredondados da caixa do output */
         padding: 10px; /* Opcional: adicione espaçamento interno */
+
         }
         
         
@@ -52,9 +59,19 @@ ui <- fluidPage(
         
         /* Defina a fonte desejada para as saídas */
         .shiny-output-output pre {
-         font-family: Arial, sans-serif;
+       
+        font-family: Arial, sans-serif;
         }
         
+        .painel {
+        
+        background-color: #ffffff; 
+          border: 1px solid #dddddd; 
+          border-radius: 5px; 
+          padding: 5px; 
+          
+          
+        }
       ")
     )
   ),
@@ -66,7 +83,7 @@ ui <- fluidPage(
   
   sidebarLayout(
     sidebarPanel(
-      selectInput("semana", "Número da Semana a Prever (1-20):", choices= 0:20),
+      selectInput("semana", "Número da Semana a Prever (20 (+ antiga) - 1 (+ recente)):", choices= 0:20),
       tags$hr(),
       h5("Datas a Prever:"),
       verbatimTextOutput("datasOutput"),
@@ -78,55 +95,57 @@ ui <- fluidPage(
       verbatimTextOutput("output3")
     ),
     mainPanel(
-      fluidRow(
-        column(6, 
-               
-                 h5("Plano Armazém:"),
-                 verbatimTextOutput("output2")
-        ),
-        column(6, 
-               
-                 h5("Custos Totais:"),
-                 verbatimTextOutput("output4")
-               
-        ),
-        column(6, 
-               
-                 h5("Plano Veículo 1:"),
-                 verbatimTextOutput("output5")
-               
-        ),
-        column(6, 
-               
-                 h5("Bebidas Empacotas e Distribuidas Steella:"),
-                 verbatimTextOutput("output6")
-               
-        ),
-        column(6, 
-               
-                 h5("Plano Veicúlo 2"),
-                 verbatimTextOutput("output7")
-               
-        ),
-        column(6, 
-               
-                 h5("Bebidas Empacotas e Distribuidas Bud:"),
-                 verbatimTextOutput("output8")
-               
-        ),
-        column(6, 
-               
-                 h5("Plano Veículo 3"),
-                 verbatimTextOutput("output9")
-               
-        ),
-        column(6, 
-               
-                 h5("LUCRO FINAL:"),
-                 verbatimTextOutput("output10")
-               
-        )
-      )
+      div(class = "painel",
+        fluidRow(
+          column(6, 
+                 
+                   h5("Plano Armazém:"),
+                   verbatimTextOutput("output2")
+          ),
+          column(6, 
+                 
+                   h5("Custos Totais:"),
+                   verbatimTextOutput("output4")
+                 
+          ),
+          column(6, 
+                 
+                   h5("Plano Veículo 1:"),
+                   verbatimTextOutput("output5")
+                 
+          ),
+          column(6, 
+                 
+                   h5("Bebidas Empacotas e Distribuidas Steella:"),
+                   verbatimTextOutput("output6")
+                 
+          ),
+          column(6, 
+                 
+                   h5("Plano Veicúlo 2"),
+                   verbatimTextOutput("output7")
+                 
+          ),
+          column(6, 
+                  
+                   h5("Bebidas Empacotas e Distribuidas Bud:"),
+                   verbatimTextOutput("output8")
+                 
+          ),
+          column(6, 
+                 
+                   h5("Plano Veículo 3"),
+                   verbatimTextOutput("output9")
+                 
+          ),
+          column(6, 
+                  
+                  h5(tags$strong("LUCRO FINAL:")),
+                  verbatimTextOutput("output10")
+                 
+          )
+        ) 
+      )   
     )
   )
 )
@@ -248,11 +267,15 @@ server <- function(input, output) {
     semana_anterior(semana_selecionada)
     
     cerveja <- "steella"
+    
+   # melhor método steella
+    metodo_ml <-"mlpe"
+    
     # Realize as ações desejadas com o valor da semana aqui
     # Exemplo: print(semana)
     if (semana_selecionada > 0) {
       source("Vendas_previstas_st_bud_app.R")
-      resultado <- semana_selecionada_ML_RW(semana_selecionada, cerveja)
+      resultado <- semana_selecionada_ML_RW(semana_selecionada, cerveja, metodo_ml)
       resultados <- list(
         predicted_dates = resultado$predicted_dates,
         predicted_sales = resultado$predicted_sales
@@ -278,8 +301,12 @@ server <- function(input, output) {
       
       # Alterar cerceja
       cerveja <- "bud"
+      
+      #melhor metodo bud 
+      metodo_ml <-"xgboost" 
+      
       # Chamar novamente a função
-      resultado_bud <- semana_selecionada_ML_RW(semana_selecionada, cerveja)
+      resultado_bud <- semana_selecionada_ML_RW(semana_selecionada, cerveja, metodo_ml)
       resultados_bud <- list(
         predicted_dates = resultado_bud$predicted_dates,
         predicted_sales = resultado_bud$predicted_sales
@@ -348,7 +375,7 @@ server <- function(input, output) {
       
       # Atualizar a caixa pac STEELLA
       output$output10 <- renderText({
-        paste(resultado_lucro_final, collapse = ", ")
+        paste(round(resultado_lucro_final), collapse = ", ")
       })
       
       # Atualizar a caixa custos
