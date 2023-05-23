@@ -1,5 +1,6 @@
 source("Repair.R")
 
+
 #Definir os custos fixos e outras variaveis 
 custo_armazem_normal <- 10
 custo_armazem_fim_semana <- 15
@@ -27,6 +28,14 @@ lucro_vendas_st_bud <- 0
 custo_total_empresa <- 0 
 despesas <-0
 
+vendas_previstas_stella <- c(0,0,0,0,0,0,0)
+vendas_previstas_bud <-c(0,0,0,0,0,0,0)
+stock_stella <-c(0,0,0,0,0,0,0)
+stock_bud <-c(0,0,0,0,0,0,0)
+preco_bud <-4.4
+preco_stella <- 5.7
+
+source("Vendas_previstas_st_bud_app.R")
 
 # definir a função eval
 eval <- function(s) {

@@ -1,8 +1,9 @@
 semana_selecionada_ML_RW <- function(SemanaSelecionada, cerveja,metodo_ml) {
   library(forecast)
   library(readxl)
+  library(rminer)
   
-  bebidas <- read_excel("C:/Users/Miguel Rebelo/Desktop/TIAPOSE/Otimização/bebidas.xlsx")
+  bebidas <- read_excel("~/Documents/GitHub/TIAPOSE/Otimização/bebidas.xlsx")
   
   if (cerveja == "steella") {
     TS <- ts(bebidas[, 5])
@@ -46,7 +47,6 @@ semana_selecionada_ML_RW <- function(SemanaSelecionada, cerveja,metodo_ml) {
   predicted_dates <- predicted_dates[1:7]
   predicted_sales_c <- predicted_sales[1:7]
   
-  print(predicted_sales_c)
   
   resultado <- list(predicted_dates = predicted_dates, predicted_sales = predicted_sales_c)
   
@@ -54,15 +54,22 @@ semana_selecionada_ML_RW <- function(SemanaSelecionada, cerveja,metodo_ml) {
 }
 
 
-Otimiza <-function (vendas_previstas_stella, vendas_previstas_bud) {
-  source("Eval.R")
+
+Otimiza <-function (predicted_sales_steella, predicted_sales_bud) {
+  
   source("hill.R")
   source("eval_despesas.R")
+  source("Eval.R")
+  
   
   #guardar vendas
-  vendas_prev_st <- vendas_previstas_stella
-  vendas_prev_bud <- vendas_previstas_bud
-
+  vendas_previstas_stella <- predicted_sales_steella
+  vendas_previstas_bud <- predicted_sales_bud
+  
+  print("Vendas pre st e bud:")
+  print(vendas_previstas_stella)
+  print(vendas_previstas_bud)
+  
   # dimension
   D=42
   
@@ -70,7 +77,7 @@ Otimiza <-function (vendas_previstas_stella, vendas_previstas_bud) {
   #Para ter o lower value do armazem podemos calcular os recursos com base
   #numa percentagem das vendas previstas
   #total de cervejas
-  tc = vendas_prev_bud + vendas_prev_bud
+  tc = vendas_previstas_stella + vendas_previstas_bud
   vtc = 0.50 * tc # das previtas, usamos apenas 35% - dependendo da confianca das previsoes
   n_func_max= round(vtc/72) # saber o nmr de funcionarios necessários
   
